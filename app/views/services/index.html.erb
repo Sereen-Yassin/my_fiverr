@@ -1,4 +1,5 @@
 
+
 <% @service.each do |service| if current_user.id.to_s == service.user_id.to_s %>
   <%= service.title %><br>
     <%= link_to 'Show service destails', service_path(service.id) %><br><br>
