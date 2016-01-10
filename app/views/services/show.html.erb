@@ -1,0 +1,50 @@
+<% content_for :top_content do %>
+  <div class="jumbotron">
+    <div class="container">
+      <h1>Service</h1>
+    </div>
+  </div>
+<% end %>
+<%= form_for @service do |f| %>
+<p>
+  <%= f.label :Tiltle %>     <%= f.label @service.title %><br>
+  <%= f.label :Description unless @service.description.nil? %>     <%= f.label @service.description unless @service.description.nil?  %> <br>
+  <%= f.label :Price unless @service.price.nil? %>     <%= f.label @service.price unless @service.price.nil?  %> <br>
+  <%= f.label :Delivery_time unless @service.delivery_time.nil? %>     <%= f.label @service.delivery_time unless @service.delivery_time.nil?  %> <br>
+  <%= f.label :Included_revisions unless @service.included_revisions.nil?  %>     <%= f.label @service.included_revisions unless @service.included_revisions.nil?  %> <br>
+  <%= f.label :Extra_delivery unless @service.extra_delivery.nil? %>     <%= f.label @service.extra_delivery unless @service.extra_delivery.nil?  %> <br>
+  <%= f.label :Extra_delivery_price unless @service.extra_delivery_price.nil?  %>     <%= f.label @service.extra_delivery_price unless @service.extra_delivery_price.nil?  %> <br>
+  <%= f.label :Source_code_price unless @service.source_code_price.nil? %>     <%= f.label @service.source_code_price unless @service.source_code_price.nil?  %> <br>
+  <%= f.label :Revision_price unless @service.revision_price.nil?  %>     <%= f.label @service.revision_price unless @service.revision_price.nil?  %> <br>
+  <%= f.label :Revision_additional unless @service.revision_additional.nil?  %>     <%= f.label @service.revision_additional unless @service.revision_additional.nil?  %> <br>
+  <%= f.label :Stock_image_price unless @service.stock_image_price.nil?  %>     <%= f.label @service.stock_image_price unless @service.stock_image_price.nil?  %> <br>
+</p>
+<% end %>
+<% if user_signed_in? %>
+<td><%= link_to 'Back', root_path  %></td>
+<% if current_user.id.to_s == @service.user_id.to_s %>
+<td><%= link_to 'Edit', edit_admin_service_path(@service.id) %></td>
+<td><%= link_to 'Destroy', admin_service_path(@service), method: :delete %></td>
+<% end %>
+<h2>Add to cart</h2>
+<%= form_for ([@service ,@service.carts.build]) do |f| %>
+  <p>
+    <%= f.hidden_field :user_id, :value => current_user.id %>
+  </p>
+  <p>
+    <%= f.hidden_field :service_id, :value => @service.id%>
+  </p>
+  <p>
+    <%= f.hidden_field :service_owner, :value => @service.user_id%>
+  </p>
+  <p>
+    <%= f.hidden_field :owner_name, :value => @service.user_name%>
+  </p>
+  <p>
+    <%= f.hidden_field :service_name, :value => @service.title%>
+  </p>
+  <p>
+    <%= f.submit 'ADD' %>
+  </p>
+<% end %>
+<% end %>

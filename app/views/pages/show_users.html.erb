@@ -1,0 +1,8 @@
+<% @users = User.all %>
+<% @users.each do |user| %>
+<p> Name:  <%= user.name %><br/></p>
+<p> Email: <%= user.email %><br/></p>
+<p> User type:  <%= user.user_type %><br/></p>
+<td><%= link_to 'delete user', delete_user_page_path(user.id), method: :delete %></td>
+  <br>
+<% end %>

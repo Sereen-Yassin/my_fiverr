@@ -1,0 +1,64 @@
+<h2>Add new Service:</h2>
+<%= form_for :service, url: admin_services_path  do |f| %>
+  <p>
+    <%= f.label :title %><br>
+    <%= f.text_field :title %>
+  </p>
+  <p>
+    <%= f.label :description %><br>
+    <%= f.text_area :description %>
+  </p>
+  <p>
+    <%= f.collection_select :category_id, Category.order(:name),:id,:name, :include_blank => "Please select Category" %>
+  </p>
+
+  <p>
+    <%= f.hidden_field :user_id, :value => current_user.id %>
+  </p>
+  <p>
+    <%= f.hidden_field :user_name, :value => current_user.name %>
+  </p>
+  <p>
+    <%= f.label :Basic_price %>
+    <%= f.label "5$" %>
+  </p>
+  <p>
+    <%= f.hidden_field :price, :value => "5" %>
+  </p>
+  <p>
+    <% @days_array = 1...30%>
+    Delivery Time <%= f.select :delivery_time, @days_array , include_blank: "select" %>
+  </p>
+  <p>
+    <% @revision_array = [0,1,2,3,4,5,6,7,8,9,"UNLIMITED"]%>
+    Included Revisions <%= f.select :included_revisions, @revision_array , include_blank: "select" %>
+  </p>
+
+   Extras <input id="service_extras" name="publication" value= true  type= "checkbox"  />
+  <div id="extras" style="display:none;">
+    <% @array = 0...15%>
+    <% @extra_delivery_money = ["5", "10", "15", "20"]%>
+    <br>
+    <%= f.label :extra_fast_delivery %><br> I'll deliver in only <%=  f.select :extra_delivery, @array  %> for an extra <%= f.select :extra_delivery_price, @extra_delivery_money , include_blank: "0", :selected => '0' %><br><br>
+    <%= f.label :Include_Source_Code %><br> for an extra <%= f.select :source_code_price, @extra_delivery_money , include_blank: "0", :selected => '0' %><br><br>
+    <%= f.label :Additional_Revision %><br> for an extra <%= f.select :revision_price, @extra_delivery_money , include_blank: "0", :selected => '0' %> and additional <%= f.select :revision_additional, @array  %> <br><br>
+    <input type="checkbox" name="service[stock_image_price]" value="10"> I'll use a Getty Images® licensed stock image for $10.00
+  </div>
+  <p>
+    <%= f.submit %>
+  </p>
+  <table>
+
+  </table>
+<% end %>
+<script type="text/javascript">
+  var checkbox = document.getElementById('service_extras');
+  var details_div = document.getElementById('extras');
+  checkbox.onchange = function() {
+     if(this.checked) {
+       details_div.style['display'] = 'block';
+     } else {
+       details_div.style['display'] = 'none';
+     }
+  };
+</script>

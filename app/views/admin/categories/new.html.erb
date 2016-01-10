@@ -1,0 +1,10 @@
+<%= form_for :category, url: admin_categories_path do |f| %>
+  <p>
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+    <%= f.hidden_field :parent_id, :value => params[:format] %>
+  </p>
+    <%= f.submit %>
+  </p>
+<% end %>
+<%= link_to 'Back', root_path %>

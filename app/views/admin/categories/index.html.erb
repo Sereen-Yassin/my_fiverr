@@ -1,0 +1,44 @@
+
+<%= @category.nil? ? 'Main categories' : @category.name %>
+<table>
+  <td>  <h2><%= 'SubCategories' unless user_signed_in? %></h2> </td>
+<% @categories.each do |category| %>
+<tr>
+  <td><%= link_to category.name, category_path(category) %></td>
+</tr>
+<% end %>
+</table>
+<table>
+<td>  <h3><%= 'Services' unless user_signed_in? %></h3> </td>
+<% @category.services.each do |service| unless user_signed_in? %>
+<tr>
+<td><%= link_to service.title, service_path(service.id) %></td>
+</tr>
+<% end %>
+<% end %>
+</table>
+  <% if user_signed_in? %>
+<table>
+  <h1><%= 'Services' %></h1>
+<% @category.services.each do |service| %>
+<tr>
+<td><%= link_to service.title, service_path(service.id) %></td>
+<% if current_user.user_type.to_s == "admin" %>
+<td><%= link_to 'Edit', edit_service_path(service.id) unless @category.nil? %></td>
+<td><%= link_to 'Destroy', service_path(service), method: :delete %></td>
+<% end %>
+  </tr>
+<% end %>
+</table>
+
+<p>
+  <%= link_to 'Back', root_path  %>
+  <% if current_user.user_type.to_s == "admin" %>
+  <%= link_to 'New (sub-category)', new_category_path(@category) unless @category.nil? %>
+  <%= link_to 'Edit', edit_category_path(@category) unless @category.nil? %>
+  <%= link_to 'Destroy', category_path(@category),
+              method: :delete,
+              data: { confirm: 'Are you sure?' } %>
+<% end %>
+</p>
+<% end %>
