@@ -2,7 +2,7 @@ class CategoriesController < ApplicationController
 
   def index
     #@category = nil
-    @category = Category.find(:all , :conditions => {:parent_id => nil})
+    @category = Category.where(:parent_id => 0)
   end
 
 
